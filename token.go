@@ -121,8 +121,9 @@ func (t *Token) Extra(key string) interface{} {
 // expired reports whether the token is expired.
 // t must be non-nil.
 func (t *Token) expired() bool {
+	//by default t.Expiry.IsZero() means never expired, but NH consider it as EXPIRED.
 	if t.Expiry.IsZero() {
-		return false
+		return true
 	}
 	return t.Expiry.Round(0).Add(-expiryDelta).Before(time.Now())
 }
